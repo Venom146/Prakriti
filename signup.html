@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Sign Up</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #edf2f7;
+      padding: 40px;
+    }
+    .container {
+      background: white;
+      padding: 30px;
+      max-width: 400px;
+      margin: auto;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    input, button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+    }
+    a {
+      display: block;
+      text-align: center;
+      margin-top: 15px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Create Account</h2>
+    <input type="email" id="email" placeholder="Email" required />
+    <input type="password" id="password" placeholder="Password" required />
+    <button onclick="signUp()">Sign Up</button>
+    <a href="index.html">Already have an account? Sign In</a>
+    <p id="message" style="color: red; text-align: center;"></p>
+  </div>
+
+  <script>
+    function signUp() {
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+
+      if (localStorage.getItem(email)) {
+        document.getElementById("message").innerText = "User already exists!";
+      } else {
+        localStorage.setItem(email, JSON.stringify({ email, password }));
+        alert("Sign Up successful! Redirecting to sign in...");
+        window.location.href = "index.html";
+      }
+    }
+  </script>
+</body>
+</html>
