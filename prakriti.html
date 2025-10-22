@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Website</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+        background: #f3f4f6;
+      }
+      h2 {
+        text-align: center;
+      }
+      .question {
+        margin-bottom: 15px;
+      }
+      label {
+        font-weight: bold;
+      }
+      select {
+        width: 100%;
+        padding: 8px;
+        margin-top: 5px;
+      }
+      button {
+        padding: 10px 20px;
+        margin-top: 20px;
+        font-size: 16px;
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        cursor: pointer;
+      }
+      .result {
+        margin-top: 30px;
+        background-color: #ffffff;
+        padding: 20px;
+        border-radius: 8px;
+      }
+    </style>
+  </head>
+  <body>
+    <script>
+      if (!localStorage.getItem("currentUser")) {
+        alert("Please sign in first!");
+        window.location.href = "index.html";
+      }
+    </script>
+
+    <h2>Prakriti</h2>
+
+    <div class="question">
+      <label for="skin">Skin Type:</label>
+      <select id="skin">
+        <option value="vata">Dry</option>
+        <option value="pitta">Oily</option>
+        <option value="kapha">Balanced</option>
+      </select>
+    </div>
+
+    <div class="question">
+      <label for="body">Body Build:</label>
+      <select id="body">
+        <option value="vata">Thin</option>
+        <option value="pitta">Muscular</option>
+        <option value="kapha">Heavier</option>
+      </select>
+    </div>
+
+    <div class="question">
+      <label for="hair">Hair Type:</label>
+      <select id="hair">
+        <option value="vata">Dry/Thin</option>
+        <option value="pitta">Oily/Thinning</option>
+        <option value="kapha">Thick/Oily</option>
+      </select>
+    </div>
+
+    <div class="question">
+      <label for="mindset">Mindset:</label>
+      <select id="mindset">
+        <option value="vata">Restless</option>
+        <option value="pitta">Intense</option>
+        <option value="kapha">Calm</option>
+      </select>
+    </div>
+
+    <div class="question">
+      <label for="emotion">Emotions:</label>
+      <select id="emotion">
+        <option value="vata">Anxious</option>
+        <option value="pitta">Angry</option>
+        <option value="kapha">Content</option>
+      </select>
+    </div>
+
+    <div class="question">
+      <label for="diet">Diet Preference:</label>
+      <select id="diet">
+        <option value="vata">Warm/Dry</option>
+        <option value="pitta">Hot/Spicy</option>
+        <option value="kapha">Light/Sweet</option>
+      </select>
+    </div>
+
+    <div class="question">
+      <label for="weather">Weather Preference:</label>
+      <select id="weather">
+        <option value="vata">Warm</option>
+        <option value="pitta">Cool</option>
+        <option value="kapha">Warm and Moist</option>
+      </select>
+    </div>
+
+    <button onclick="calculatePrakriti()">Get Result</button>
+
+    <div id="result" class="result"></div>
+
+    <script>
+      function calculatePrakriti() {
+        const traits = [
+          "skin",
+          "body",
+          "hair",
+          "mindset",
+          "emotion",
+          "diet",
+          "weather",
+        ];
+        const scores = { vata: 0, pitta: 0, kapha: 0 };
+
+        traits.forEach((id) => {
+          const value = document.getElementById(id).value;
+          scores[value]++;
+        });
+
+        const sortedDoshas = Object.keys(scores).sort(
+          (a, b) => scores[b] - scores[a]
+        );
+        const [dominant, secondary, least] = sortedDoshas;
+
+        const reasons = {
+          vata: "Traits like dryness, restlessness, and thin build indicate Vata.",
+          pitta:
+            "Traits like intensity, spicy food preference, and irritability indicate Pitta.",
+          kapha:
+            "Traits like calmness, heaviness, and deep sleep indicate Kapha.",
+        };
+
+        document.getElementById("result").innerHTML = `
+        <h3>Your Prakriti Analysis</h3>
+        <p><strong>Dominant Dosha:</strong> ${dominant.toUpperCase()} - ${
+          reasons[dominant]
+        }</p>
+        <p><strong>Secondary Dosha:</strong> ${secondary.toUpperCase()} - ${
+          reasons[secondary]
+        }</p>
+        <p><strong>Least Dosha:</strong> ${least.toUpperCase()} - ${
+          reasons[least]
+        }</p>
+      `;
+      }
+    </script>
+  </body>
+</html>
